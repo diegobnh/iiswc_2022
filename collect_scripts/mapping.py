@@ -1,7 +1,6 @@
 from datetime import datetime
 from statistics import mean, median
 import sys
-import pandas as pd
 import matplotlib.pyplot as plt
 import time
 import operator
