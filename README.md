@@ -6,6 +6,7 @@ The execution of the experiments is divided into three major phases:
 
 * **Data collection**
   * In this phase, dynamic memory allocations and memory access samples of the monitored application are collected.
+  * This data is collected through the *run.sh* script
 * **Post Process**
   * In this phase we postprocess the generated data (perf.data). This is because perf-script does not generate the data necessary for our analysis in its default mode. At the end, we will have a file formatted and ready for the next phase.
 * **Mapping**
