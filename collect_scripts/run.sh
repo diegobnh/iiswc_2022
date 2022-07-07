@@ -97,7 +97,7 @@ elif [[ $3 == "static_mapping" ]] ; then
         LD_PRELOAD=./mmap_intercept_to_static_bind.so /scratch/gapbs/./$1 -f /scratch/gapbs/benchmark/graphs/$2".sg" -n128 1> /dev/null 2> "allocations_bfs_kron.csv"
     fi
 else
-   echo "Invalid parameter!"
+    echo "Invalid parameter!"
 fi;
 
 pkill perf &> /dev/null
