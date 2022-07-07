@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import time
 import operator
 import subprocess
-from datetime import datetime
 import math
 import numpy as np
 import pandas as pd
@@ -20,10 +19,7 @@ from multiprocessing.dummy import Pool as ThreadPool
 from multiprocessing import cpu_count
 
 
-'''
-Esse plot não requer permissões de sudo.
-python3 -W ignore 2_manipulate_mmap_and_perfmem.py /ix/dmosse/dmoura/iiswc_2022/collect_scripts
-'''
+#python3 -W ignore 2_manipulate_mmap_and_perfmem.py "path_of_files"
 
 global g_current_app_dataset
 
