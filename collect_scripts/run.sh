@@ -2,8 +2,8 @@
 
 if [ $# -eq 3 ] ; then
     echo "You must passed three arguments!"
-    echo "e.g. ./run bc bc_kron autonuma"
-    echo "e.g. ./run bc bc_kron static_mapping"
+    echo "e.g.  sudo ./run bc bc_kron autonuma"
+    echo "e.g.  sudo ./run bc bc_kron static_mapping"
     exit
 fi
 
