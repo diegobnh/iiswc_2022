@@ -82,16 +82,16 @@ track_info $1 $2 &
 if [ $3 = "autonuma" ]; then
 	export APP="${1}["    #if you dont put [, sometimes we will collect wrong things for example libc.so[ and ./bc[ both has "bc" string
     if [ $1 = "bc" ]; then
-        LD_PRELOAD=./mmap_intercept_only_to_trace.so /scratch/gapbs/./bfs -f /scratch/gapbs/benchmark/graphs/urand_g31_k16.sg 1> /dev/null 2> "allocations_bfs_kron.csv"
+        LD_PRELOAD=./mmap_intercept_only_to_trace.so /scratch/gapbs/./$1 -f /scratch/gapbs/benchmark/graphs/urand_g31_k16.sg 1> /dev/null 2> "allocations_bfs_kron.csv"
     else
-        LD_PRELOAD=./mmap_intercept_only_to_trace.so /scratch/gapbs/./bfs -f /scratch/gapbs/benchmark/graphs/urand_g31_k16.sg -n128 1> /dev/null 2> "allocations_bfs_kron.csv"
+        LD_PRELOAD=./mmap_intercept_only_to_trace.so /scratch/gapbs/./$1 -f /scratch/gapbs/benchmark/graphs/urand_g31_k16.sg -n128 1> /dev/null 2> "allocations_bfs_kron.csv"
     fi
 elif [ $3 = "static_mapping" ] ; then
 	export APP="${1}["    #if you dont put [, sometimes we will collect wrong things for example libc.so[ and ./bc[ both has "bc" string
     if [ $1 = "bc" ]; then
-        LD_PRELOAD=./mmap_intercept_to_static_bind.so /scratch/gapbs/./bfs -f /scratch/gapbs/benchmark/graphs/urand_g31_k16.sg 1> /dev/null 2> "allocations_bfs_kron.csv"
+        LD_PRELOAD=./mmap_intercept_to_static_bind.so /scratch/gapbs/./$1 -f /scratch/gapbs/benchmark/graphs/urand_g31_k16.sg 1> /dev/null 2> "allocations_bfs_kron.csv"
     else
-        LD_PRELOAD=./mmap_intercept_to_static_bind.so /scratch/gapbs/./bfs -f /scratch/gapbs/benchmark/graphs/urand_g31_k16.sg -n128 1> /dev/null 2> "allocations_bfs_kron.csv"
+        LD_PRELOAD=./mmap_intercept_to_static_bind.so /scratch/gapbs/./$1 -f /scratch/gapbs/benchmark/graphs/urand_g31_k16.sg -n128 1> /dev/null 2> "allocations_bfs_kron.csv"
     fi
 else
    echo "Invalid parameter!"
