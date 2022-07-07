@@ -5,7 +5,8 @@ This directory contains instructions and codes for reproducing experiments submi
 The execution of the experiments is divided into three major phases:
 
 * **Data collection**
+  * In this phase, information is collected from the dynamic allocations of the application as well as the samples.
 * **Post Process**
-* Mapping
+* **Mapping**
 
 After that we used shell scripts and python script to generate graphs and extract the results.
