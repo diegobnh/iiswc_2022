@@ -2,8 +2,8 @@
 
 if [ $# -eq 3 ] ; then
     echo "You must passed three arguments!"
-    echo "e.g.  sudo ./run bc kron autonuma"
-    echo "e.g.  sudo ./run bc kron static_mapping"
+    echo "e.g.  sudo ./run.sh bc kron autonuma"
+    echo "e.g.  sudo ./run.sh bc kron static_mapping"
     exit
 fi
 
@@ -84,17 +84,17 @@ if [[ $3 == "autonuma" ]]; then
     setup_autonuma_parameters
     export APP="${1}["    #if you dont put [, sometimes we will collect wrong things for example libc.so[ and ./bc[ both has "bc" string
     if [[ $1 == "bc" ]]; then
-        LD_PRELOAD=./mmap_intercept_only_to_trace.so /scratch/gapbs/./$1 -f /scratch/gapbs/benchmark/graphs/$2".sg" 1> /dev/null 2> "allocations_bfs_kron.csv"
+        LD_PRELOAD=./mmap_intercept_only_to_trace.so /scratch/gapbs/./$1 -f /scratch/gapbs/benchmark/graphs/$2".sg" 1> /dev/null 2> "allocations_"$1"_"$2".csv"
     else
-        LD_PRELOAD=./mmap_intercept_only_to_trace.so /scratch/gapbs/./$1 -f /scratch/gapbs/benchmark/graphs/$2".sg" -n128 1> /dev/null 2> "allocations_bfs_kron.csv"
+        LD_PRELOAD=./mmap_intercept_only_to_trace.so /scratch/gapbs/./$1 -f /scratch/gapbs/benchmark/graphs/$2".sg" -n128 1> /dev/null 2> "allocations_"$1"_"$2".csv"
     fi
 elif [[ $3 == "static_mapping" ]] ; then
     setup_static_mapping_parameters
     export APP="${1}["    #if you dont put [, sometimes we will collect wrong things for example libc.so[ and ./bc[ both has "bc" string
     if [[ $1 == "bc" ]]; then
-        LD_PRELOAD=./mmap_intercept_to_static_bind.so /scratch/gapbs/./$1 -f /scratch/gapbs/benchmark/graphs/$2".sg" 1> /dev/null 2> "allocations_bfs_kron.csv"
+        LD_PRELOAD=./mmap_intercept_to_static_bind.so /scratch/gapbs/./$1 -f /scratch/gapbs/benchmark/graphs/$2".sg" 1> /dev/null 2> "allocations_"$1"_"$2".csv"
     else
-        LD_PRELOAD=./mmap_intercept_to_static_bind.so /scratch/gapbs/./$1 -f /scratch/gapbs/benchmark/graphs/$2".sg" -n128 1> /dev/null 2> "allocations_bfs_kron.csv"
+        LD_PRELOAD=./mmap_intercept_to_static_bind.so /scratch/gapbs/./$1 -f /scratch/gapbs/benchmark/graphs/$2".sg" -n128 1> /dev/null 2> "allocations_"$1"_"$2".csv"
     fi
 else
     echo "Invalid parameter!"
