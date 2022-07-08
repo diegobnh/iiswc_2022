@@ -775,7 +775,7 @@ def plot_percentage_access_on_PMEM_and_DRAM():
     filename = "percentage_access_on_PMEM_and_DRAM.pdf"
     plt.savefig(filename, bbox_inches="tight")
     plt.clf()
-def plot_manual_one_and_two_touches_per_pages():
+def plot_one_and_two_touches_per_pages():
     df = pd.read_csv("input_to_plot_touches_per_pages.csv", names["app_name","1 touch","2 touches"]
     
     df.set_index('app_name', inplace=True)
@@ -845,7 +845,7 @@ def main():
     plot_counters_and_cpu_and_memory_usage()
     '''
     plot_gains_and_lost_execution_time()
-    plot_manual_one_and_two_touches_per_pages()
+    plot_one_and_two_touches_per_pages()
     plot_percentage_access_on_PMEM_and_DRAM()
 if __name__ == "__main__":
    main()
