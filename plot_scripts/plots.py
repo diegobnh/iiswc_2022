@@ -12,6 +12,13 @@ import math
 import os
 
 
+if len(sys.argv) > 1:
+    type_of_plot = sys.argv[1]
+else:
+    print("You should pass the type of plots: single_application or multi_application!")
+    sys.exit(0)
+    
+
 g_labelpad_value = 8
 g_fontsize_value = 8
 g_virt_page_number_list = []
@@ -819,33 +826,35 @@ def plot_gains_and_lost_execution_time():
     plt.clf()
 
 def main():
-    '''
-    files_dram = glob.glob('perfmem_trace_mapped_DRAM_*.csv')
-    files_pmem = glob.glob('perfmem_trace_mapped_PMEM_*.csv')
-        
-    application_dataset = []
-    for file in files_dram:
-       name = file.split('.')[0]
-       app = name.split('_')[-2] + "_" + name.split('_')[-1]
-       application_dataset.append(app)
     
-    for file_dram,file_pmem,app_dataset in zip(files_dram,files_pmem, application_dataset):
-        df_DRAM = pd.read_csv(file_dram)
-        df_PMEM = pd.read_csv(file_pmem)
+    if type_of_plot == "single_application:"
+        files_dram = glob.glob('perfmem_trace_mapped_DRAM_*.csv')
+        files_pmem = glob.glob('perfmem_trace_mapped_PMEM_*.csv')
+
+        application_dataset = []
+        for file in files_dram:
+           name = file.split('.')[0]
+           app = name.split('_')[-2] + "_" + name.split('_')[-1]
+           application_dataset.append(app)
+
+        for file_dram,file_pmem,app_dataset in zip(files_dram,files_pmem, application_dataset):
+            df_DRAM = pd.read_csv(file_dram)
+            df_PMEM = pd.read_csv(file_pmem)
+
+            generate_access_frequency_per_object(app_dataset, df_DRAM, df_PMEM)
+            plot_touches_per_page(app_dataset, df_DRAM, df_PMEM)
+            analysis_outside_from_cache(app_dataset, df_DRAM, df_PMEM)
+            decide_static_mapping_between_DRAM_and_PMEM(app_dataset, df_DRAM, df_PMEM)
+            plot_number_of_access_per_object_outside_from_cache(app_dataset)
+            analysis_only_two_touches_per_page(app_dataset, df_PMEM)
+            plot_statistics_to_pages_with_two_touches(app_dataset)
+            plot_distribution_access_on_different_mem_levels(app_dataset)
+
+        plot_counters_and_cpu_and_memory_usage()
         
-        generate_access_frequency_per_object(app_dataset, df_DRAM, df_PMEM)
-        plot_touches_per_page(app_dataset, df_DRAM, df_PMEM)
-        analysis_outside_from_cache(app_dataset, df_DRAM, df_PMEM)
-        decide_static_mapping_between_DRAM_and_PMEM(app_dataset, df_DRAM, df_PMEM)
-        plot_number_of_access_per_object_outside_from_cache(app_dataset)
-        analysis_only_two_touches_per_page(app_dataset, df_PMEM)
-        plot_statistics_to_pages_with_two_touches(app_dataset)
-        plot_distribution_access_on_different_mem_levels(app_dataset)
-        
-    plot_counters_and_cpu_and_memory_usage()
-    '''
-    plot_gains_and_lost_execution_time()
-    plot_one_and_two_touches_per_pages()
-    plot_percentage_access_on_PMEM_and_DRAM()
+    elif type_of_plot == "multi_application:"
+        plot_gains_and_lost_execution_time()
+        plot_one_and_two_touches_per_pages()
+        plot_percentage_access_on_PMEM_and_DRAM()
 if __name__ == "__main__":
    main()
