@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ $# -eq 3 ] ; then
+if [ $# -lt 3 ] ; then
     echo "You must passed three arguments!"
     echo "e.g.  sudo ./run.sh bc kron autonuma"
     echo "e.g.  sudo ./run.sh bc kron static_mapping"
