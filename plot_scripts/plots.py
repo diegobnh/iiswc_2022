@@ -861,6 +861,7 @@ def main():
         plot_counters_and_cpu_and_memory_usage()
         
     elif type_of_plot == "multi_application:"
+        os.system("./generate_inputs_to_plot.sh")
         plot_gains_and_lost_execution_time()
         plot_one_and_two_touches_per_pages()
         plot_percentage_access_on_PMEM_and_DRAM()
