@@ -11,6 +11,14 @@ import sys
 import math
 import os
 
+'''
+So two types of plots we have:
+(1) specific plots of each app/dataset (single_application)
+(2) plots including info of all app/dataset (multi_application)
+
+The second type of plot can only be executed after having executed the first one before at least once.
+
+'''
 
 if len(sys.argv) > 1:
     type_of_plot = sys.argv[1]
