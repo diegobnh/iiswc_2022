@@ -776,14 +776,15 @@ def analysis_intersection_between_dram_pmem_in_parallel():
 
 
 def plot_percentage_access_on_PMEM_and_DRAM():
-    df = pd.read_csv("input_to_plot_access_dram_and_pmem.csv", names=["app_name","DRAM","PMEM"])
+    df = pd.read_csv("input_to_plot_access_dram_and_pmem.csv", names=["app_name","DRAM","NVM"])
+    df['Total'] = df['DRAM'] + df['NVM']
         
     df.set_index('app_name', inplace=True)
     ax = df.plot(kind='bar', rot=60, figsize= (3,2))
-    ax.legend(loc='center', ncol=2, bbox_to_anchor=(0.5, 1.2), prop={'size': 8})
+    ax.legend(loc='center', ncol=3, bbox_to_anchor=(0.5, 1.2), prop={'size': 8})
     ax.yaxis.set_major_formatter(mtick.PercentFormatter(xmax=100, decimals=0, symbol='%', is_latex=False))
     plt.ylabel("Percentage of Samples", fontsize=g_fontsize_value)
-    plt.xlabel("Applications", fontsize=g_fontsize_value)
+    plt.xlabel("Workloads", fontsize=g_fontsize_value)
     plt.grid()
     plt.yticks(fontsize=g_fontsize_value)
     plt.xticks(fontsize=g_fontsize_value)
@@ -791,7 +792,7 @@ def plot_percentage_access_on_PMEM_and_DRAM():
     plt.savefig(filename, bbox_inches="tight")
     plt.clf()
 def plot_one_and_two_touches_per_pages():
-    df = pd.read_csv("input_to_plot_touches_per_pages.csv", names["app_name","1 touch","2 touches"])
+    df = pd.read_csv("input_to_plot_touches_per_pages.csv", names=["app_name","1 touch","2 touches"])
     
     df.set_index('app_name', inplace=True)
     ax = df.plot(kind='bar', rot=60, figsize= (3,2))
@@ -802,7 +803,7 @@ def plot_one_and_two_touches_per_pages():
     ax.yaxis.set_major_formatter(mtick.PercentFormatter(xmax=100, decimals=None, symbol='%', is_latex=False))
     
     plt.ylabel("Percentage of Samples",fontsize=g_fontsize_value)
-    plt.xlabel("Applications",fontsize=g_fontsize_value)
+    plt.xlabel("Workloads",fontsize=g_fontsize_value)
     plt.grid()
     plt.yticks(fontsize=g_fontsize_value)
     plt.xticks(fontsize=g_fontsize_value)
@@ -822,7 +823,7 @@ def plot_gains_and_lost_execution_time():
     ax.yaxis.set_major_formatter(mtick.PercentFormatter(xmax=100, decimals=None, symbol='%', is_latex=False))
     ax.get_legend().remove()
     plt.axhline(y = 0, color ="black", linestyle ="--", lw = 0.5)
-    plt.xlabel("Applications")
+    plt.xlabel("Workloads")
     plt.ylabel("Exec. Time Performance")
     min = df['gain_or_lost'].min() + (-1)
     max = df['gain_or_lost'].max() + (1)
