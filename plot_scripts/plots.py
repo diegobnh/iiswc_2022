@@ -791,7 +791,7 @@ def plot_percentage_access_on_PMEM_and_DRAM():
     plt.savefig(filename, bbox_inches="tight")
     plt.clf()
 def plot_one_and_two_touches_per_pages():
-    df = pd.read_csv("input_to_plot_touches_per_pages.csv", names["app_name","1 touch","2 touches"]
+    df = pd.read_csv("input_to_plot_touches_per_pages.csv", names["app_name","1 touch","2 touches"])
     
     df.set_index('app_name', inplace=True)
     ax = df.plot(kind='bar', rot=60, figsize= (3,2))
@@ -835,7 +835,7 @@ def plot_gains_and_lost_execution_time():
 
 def main():
     
-    if type_of_plot == "single_application:"
+    if type_of_plot == "single_application":
         files_dram = glob.glob('perfmem_trace_mapped_DRAM_*.csv')
         files_pmem = glob.glob('perfmem_trace_mapped_PMEM_*.csv')
 
@@ -860,7 +860,7 @@ def main():
 
         plot_counters_and_cpu_and_memory_usage()
         
-    elif type_of_plot == "multi_application:"
+    elif type_of_plot == "multi_application":
         os.system("./generate_inputs_to_plot.sh")
         plot_gains_and_lost_execution_time()
         plot_one_and_two_touches_per_pages()
