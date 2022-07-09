@@ -776,7 +776,7 @@ def analysis_intersection_between_dram_pmem_in_parallel():
 
 
 def plot_percentage_access_on_PMEM_and_DRAM():
-    df = pd.read_csv("input_to_plot_access_dram_and_pmem.csv", names=["app_name","DRAM","NVM"])
+    df = pd.read_csv("input_perc_access_DRAM_and_PMEM.csv", names=["app_name","DRAM","NVM"])
     df['Total'] = df['DRAM'] + df['NVM']
         
     df.set_index('app_name', inplace=True)
@@ -792,7 +792,7 @@ def plot_percentage_access_on_PMEM_and_DRAM():
     plt.savefig(filename, bbox_inches="tight")
     plt.clf()
 def plot_one_and_two_touches_per_pages():
-    df = pd.read_csv("input_to_plot_touches_per_pages.csv", names=["app_name","1 touch","2 touches"])
+    df = pd.read_csv("input_touches_per_pages.csv", names=["app_name","1 touch","2 touches"])
     
     df.set_index('app_name', inplace=True)
     ax = df.plot(kind='bar', rot=60, figsize= (3,2))
