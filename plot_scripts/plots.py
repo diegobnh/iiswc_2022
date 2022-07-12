@@ -575,6 +575,8 @@ def plot_access_pattern_top_object():
             mask = (df_pmem['ts_event'] >= star_timestamp) & (df_pmem['ts_event'] <= end_timestamp)
             df_pmem = df_pmem.loc[mask]
 
+            df_pmem['virt_page_number'] = df_pmem['virt_addr'].apply(lambda x: int(x, 16) >> 12)
+            
             if flag_1_sec == True:
                 time_range_to_plot = 1
                 start_row_point = int(df_pmem.shape[0] * 0.20) #get position of 20% from execution time. Could be any values
@@ -591,7 +593,7 @@ def plot_access_pattern_top_object():
                 plt.xticks(fontsize=14)
                 plt.yticks(fontsize=14)
                 filename = "top1_access_pattern_in_PMEM_" + app_dataset + "_1sec.pdf"
-                plt.savefig(lifetime,dpi=300, bbox_inches='tight', format='pdf')
+                plt.savefig(filename,dpi=300, bbox_inches='tight', format='pdf')
                 plt.clf()
             else:
                 #plot during all lifetime
