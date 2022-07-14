@@ -369,6 +369,12 @@ def _plot_objects(app_dataset):
         ax0.legend(['% of accesses'], prop={'size': 8})
         ax1.legend(['# of accesses'], prop={'size': 8}, loc='upper left', bbox_to_anchor=(0.59, 0.8))
         ax0.yaxis.set_major_formatter(mtick.PercentFormatter(xmax=100, decimals=0, symbol='%', is_latex=False))
+        
+        if mem == "pmem":
+            ax0.annotate('19.8 milions', xy=(0.3, 65),xytext=(2, 60),arrowprops=dict(arrowstyle='->',lw=0.75), fontsize=7)
+        else:
+            ax0.annotate('16.4 milions', xy=(0.42, 25),xytext=(1.3, 24),arrowprops=dict(arrowstyle='->',lw=0.75), fontsize=7)
+
 
         ax0.tick_params(axis='x', rotation=45)
         ax0.set_xlabel('Object ID')
