@@ -1,4 +1,4 @@
-# Evaluation of Graph Applications with Autonuma using Intel Optane #
+# Performance Characterization of AutoNUMA Memory Tiering on Graph Analytics #
 
 This directory contains instructions and codes for reproducing experiments submitted to the IEEE International Symposium on Workload Characterization (IISWC 2022).
 
