@@ -65,14 +65,6 @@ def plot_counters_and_cpu_and_memory_usage():
 
         df['cpu_usage'] = df['cpu_usage'].clip(upper=100)
         
-        '''
-        file = "perfmem_trace_mapped_DRAM_" + app_dataset + ".csv"
-        df_DRAM = pd.read_csv(file, low_memory=False) #nrows=1000)
-        df_DRAM.columns = df_DRAM.columns.str.replace('ts_event', 'timestamp')
-        df_DRAM['timestamp'] = df_DRAM['timestamp'].astype(int)
-        df2 = df_DRAM.groupby(['timestamp']).size().reset_index(name='DRAM_access')
-        df2.set_index('timestamp', inplace=True)
-        '''
         fig = plt.figure()
         fig, axes = plt.subplots(figsize= (4,6),nrows=4,sharex=True, gridspec_kw = {'wspace':0.1, 'hspace':0.1})
     
@@ -81,7 +73,6 @@ def plot_counters_and_cpu_and_memory_usage():
         df[["pmem_page_cache"]].plot(style=':', linewidth=0.5, ax=axes[0], color = 'Black')#linewidth=1.5,
         axes[0].legend(['DRAM (App)','NVM (App)','DRAM (OS page cache)','NVM (OS page cache)'], prop={'size': 6}, fancybox=True, framealpha=0.5)
 
-        #axes[0].text(10, 10, 'Begin text')
         #axes[0].set_ylabel('Memory Usage (GB)')
 
         df[["pgdemote_kswapd"]].plot(ax=axes[1],linewidth=0.5, marker = 'o', ms = 0.75, linestyle='none')
@@ -105,29 +96,6 @@ def plot_counters_and_cpu_and_memory_usage():
         axes[3].tick_params(axis='x', rotation=45)
         axes[3].set_xlabel('Timestamp(seconds)')
         
-        '''
-        top_obj_call_stack = 2117290442
-        df_mmap = pd.read_csv("mmap_trace_mapped_bc_kron.csv")
-        df_mmap = df_mmap.loc[df_mmap['call_stack_hash'] == top_obj_call_stack]
-        timestamps = df_mmap['ts_event_start'].tolist()
-        #filter by callstack and convert each ts_event to an list
-        
-        for ax in axes.flat:
-            for ts in timestamps:
-                ax.axvline(ts, color='magenta', linewidth = 0.5) #linestyle ="--"
-        
-        top_obj_call_stack = 534250972
-        df_mmap = pd.read_csv("mmap_trace_mapped_bc_kron.csv")
-        df_mmap = df_mmap.loc[df_mmap['call_stack_hash'] == top_obj_call_stack]
-        timestamps = df_mmap['ts_event_start'].tolist()
-        #filter by callstack and convert each ts_event to an list
-        
-        for ax in axes.flat:
-            for ts in timestamps:
-                ax.axvline(ts, color='cyan', linewidth = 0.5) #linestyle ="--",
-        
-        axes[0].axhline(200, color='black', linewidth = 0.5)
-        '''
         filename = "memory_and_cpu_usage_and_counters_" + app_dataset + ".pdf"
 
         plt.savefig(filename, bbox_inches="tight")
