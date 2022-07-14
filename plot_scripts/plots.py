@@ -562,8 +562,6 @@ def plot_access_pattern_top_object():
                 df = df_pmem.loc[mask]
                 ax = df.plot.scatter(x = 'ts_event', y = 'virt_page_number',marker='.', s=0.2)
                 
-                title = "Object Hash:" + str(call_stack_hash)
-                plt.title(title, fontsize = g_fontsize_value)
                 plt.xlabel("Timestamp",fontsize = 14, labelpad = 12)
                 plt.ylabel("Page Number",fontsize = 14, labelpad = 14)
                 plt.xticks(fontsize=14)
@@ -581,9 +579,19 @@ def plot_access_pattern_top_object():
                 plt.ylabel("Page Number",fontsize = 14, labelpad = 14)
                 plt.xticks(fontsize=14)
                 plt.yticks(fontsize=14)
-                filename = "top1_access_pattern_in_PMEM_" + app_dataset + "_all_lifetime.pdf"
-                plt.savefig(filename,dpi=300, bbox_inches='tight', format='pdf')
+                #just to delimited which region we zoom in
+                start_row_point = int(df_pmem.shape[0] * 0.20)
+                start_time = int(df_pmem.ts_event.values[start_row_point])
+                plt.axvline(x=start_time, color='r', linestyle='--', linewidth=0.5)
+                plt.axvline(x=start_time+1, color='r', linestyle='--', linewidth=0.5)
+                #huge plot around 12MB
+                #filename = "top1_access_pattern_in_PMEM_" + app_dataset + "_all_lifetime.pdf"
+                #plt.savefig(filename,format='pdf', bbox_inches="tight")
+
+                filename = "top1_access_pattern_in_PMEM_" + app_dataset + "_all_lifetime.png"
+                plt.savefig(filename,dpi=900, format='png', bbox_inches="tight")
                 plt.clf()
+
             sys.exit() #check only the first allocation
 def analysis_over_two_touches_per_page(call_stack_hash, type_of_mem):
     #files = glob.glob('mmap_trace_mapped/mmap_trace_mapped_*.csv')
