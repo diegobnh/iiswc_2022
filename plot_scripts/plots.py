@@ -489,7 +489,7 @@ def plot_statistics_to_pages_with_two_touches(app_dataset):
         df['values'].plot(kind='bar', rot=60, figsize=(2,2))
         output = "two_access_distance_" +  app_dataset  +".pdf"
         plt.ylabel("Distance (sec)")
-        plt.xlabel("Percentis")
+        plt.xlabel("25%-ile")
         plt.savefig(output,dpi=300, bbox_inches="tight")
         plt.clf()
 
