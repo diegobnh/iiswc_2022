@@ -881,7 +881,7 @@ def plot_gains_and_lost_execution_time():
     df = pd.read_csv("input_to_plot_exec_time.csv", names=["app_name","autonuma","static mapping", "gain_or_lost"])
     
     df.set_index('app_name', inplace=True)
-    df.sort_values(by='gain_or_lost', inplace=True)
+    #df.sort_values(by='gain_or_lost', inplace=True)
     colors = tuple(np.where(df["gain_or_lost"]>0, 'tab:blue', 'tab:orange'))
     ax = df[['gain_or_lost']].plot(kind='bar', rot=60, figsize= (3,2), color=[colors])
     for p in ax.patches:
