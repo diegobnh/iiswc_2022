@@ -68,10 +68,12 @@ def plot_counters_and_cpu_and_memory_usage():
         fig = plt.figure()
         fig, axes = plt.subplots(figsize= (4,6),nrows=4,sharex=True, gridspec_kw = {'wspace':0.1, 'hspace':0.1})
     
-        df[["dram_app","pmem_app"]].plot(ax=axes[0], linewidth=0.5)
-        df[["dram_page_cache"]].plot(style='--', linewidth=0.5, ax=axes[0], color = 'Red')#linewidth=1.5,
-        df[["pmem_page_cache"]].plot(style=':', linewidth=0.5, ax=axes[0], color = 'Black')#linewidth=1.5,
-        axes[0].legend(['DRAM (App)','NVM (App)','DRAM (OS page cache)','NVM (OS page cache)'], prop={'size': 6}, fancybox=True, framealpha=0.5)
+
+        df[["dram_app"]].plot(ax=axes[0], linewidth=0.75)
+        df[["pmem_app"]].plot(ax=axes[0], style="-.",linewidth=0.75)
+        df[["dram_page_cache"]].plot(style='--', linewidth=0.75, ax=axes[0], color = 'Red')#linewidth=1.5,
+        df[["pmem_page_cache"]].plot(style=':', linewidth=0.75, ax=axes[0], color = 'Black')#linewidth=1.5,
+        axes[0].legend(['DRAM (App)','NVM (App)','DRAM (OS page cache)','NVM (OS page cache)'], prop={'size': 8}, bbox_to_anchor(1, 1.5),fancybox=True, framealpha=0.5)
 
         #axes[0].set_ylabel('Memory Usage (GB)')
 
