@@ -752,7 +752,81 @@ def analysis_intersection_between_dram_pmem_in_parallel():
             print("----------------------")
             sys.exit() #with this we analyse only the first allocation
 
+def plot_allocations_top1_object():
+    files = glob.glob('track_info_*.csv')
+    application_dataset = []
+    for file in files:
+        name = file.split('.')[0]
+        app_dataset = name.split('_')[-2] + "_" + name.split('_')[-1]
+       
+        df = pd.read_csv(file)
+        df.set_index('timestamp', inplace=True)
 
+        df['dram_page_cache'] = df['dram_page_cache_active'] + df['dram_page_cache_inactive']
+        df['pmem_page_cache'] = df['pmem_page_cache_active'] + df['pmem_page_cache_inactive']
+
+        df['dram_page_cache']  = df['dram_page_cache']/1000000
+        df['pmem_page_cache']  = df['pmem_page_cache']/1000000
+
+        df['dram_page_cache'] = df['dram_page_cache'].round(2)
+        df['pmem_page_cache'] = df['pmem_page_cache'].round(2)
+
+        df['dram_app'] = df['dram_app']/1000
+        df['pmem_app'] = df['pmem_app']/1000
+
+        df['pgdemote_kswapd'] = df['pgdemote_kswapd'].diff().fillna(0)
+        df['pgpromote_success'] = df['pgpromote_success'].diff().fillna(0)
+        df['pgpromote_candidate'] = df['pgpromote_candidate'].diff().fillna(0)
+        df['promote_threshold'] = df['promote_threshold'].diff().fillna(0)
+        df['pgpromote_demoted'] = df['pgpromote_demoted'].diff().fillna(0)
+
+        df['cpu_usage'] = df['cpu_usage'].clip(upper=100)
+
+
+        fig = plt.figure()
+        fig, axes = plt.subplots(figsize= (3,2),nrows=1,sharex=True, gridspec_kw = {'wspace':0.1, 'hspace':0.1})
+      
+        #axes.annotate('annotate', xy=(67986,159.5), xytext=(67965,155.5),arrowprops=dict(facecolor='black', shrink=0.1, width=0.1, lw=0.1))
+
+    
+        df[["dram_app","pmem_app"]].plot(ax=axes, linewidth=0.25)
+        axes.legend(['DRAM (App)','NVM (App)'], prop={'size': 6}, fancybox=True, framealpha=0.5)
+
+        axes.plot(67987.5,159.5, 'o', markersize=1, c='blue')
+        axes.plot(67987.5,159.5, 'o', markersize=1, mec='red', mfc='none', mew=8)
+
+        axes.annotate('t0', xy=(67987, 160),xytext=(67945, 150),arrowprops=dict(arrowstyle='->',lw=0.5), fontsize=6)
+        axes.annotate('t1', xy=(67987, 75),xytext=(67945, 60),arrowprops=dict(arrowstyle='->',lw=0.5), fontsize=6)
+        axes.annotate('t2', xy=(68000, 75),xytext=(68028, 60),arrowprops=dict(arrowstyle='->',lw=0.5, color="red"), fontsize=6)
+
+        axes.plot(68245,159.2, 'o', markersize=1, c='blue')
+        axes.plot(68245,159.2, 'o', markersize=1, mec='red', mfc='none', mew=8)
+
+        top_obj_call_stack = 2117290442
+        df_mmap = pd.read_csv("mmap_trace_mapped_bc_kron.csv")
+        df_mmap = df_mmap.loc[df_mmap['call_stack_hash'] == top_obj_call_stack]
+        timestamps = df_mmap['ts_event_start'].tolist()
+        #filter by callstack and convert each ts_event to an list
+
+        for ts in timestamps:
+            axes.axvline(ts, color='red', linewidth = 0.75,linestyle ="--")
+        top_obj_call_stack = 534250972
+        df_mmap = pd.read_csv("mmap_trace_mapped_bc_kron.csv")
+        df_mmap = df_mmap.loc[df_mmap['call_stack_hash'] == top_obj_call_stack]
+        timestamps = df_mmap['ts_event_start'].tolist()
+        #filter by callstack and convert each ts_event to an list
+        for ts in timestamps:
+            axes.axvline(ts, color='black', linewidth = 0.75, linestyle="--") #linestyle ="--",
+
+        #axes.axhline(200, color='black', linewidth = 0.25)
+
+        filename = "start_allocations_top1_" + app_dataset + ".pdf"
+        plt.xlim([67900, 68300])
+        plt.xticks(rotation = 45, fontsize=8)
+        plt.yticks(fontsize=8)
+        plt.xlabel("Timestamp(seconds)", fontsize=8)
+        plt.savefig(filename, bbox_inches="tight")
+        plt.clf()
 def plot_percentage_access_on_PMEM_and_DRAM():
     df = pd.read_csv("input_perc_access_DRAM_and_PMEM.csv", names=["app_name","DRAM","NVM"])
     df['Total'] = df['DRAM'] + df['NVM']
