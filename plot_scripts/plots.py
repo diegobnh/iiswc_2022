@@ -849,7 +849,7 @@ def plot_percentage_access_on_PMEM_and_DRAM():
     ax.yaxis.set_major_formatter(mtick.PercentFormatter(xmax=100, decimals=0, symbol='%', is_latex=False))
     #this is responsible to put hatches for each bar plot    
     bars = ax.patches
-    hatches = ''.join(h*len(df) for h in 'x/O.')
+    hatches = ''.join(h*len(df) for h in 'x.O')
     for bar, hatch in zip(bars, hatches):
       bar.set_hatch(hatch)
    
@@ -868,11 +868,18 @@ def plot_one_and_two_touches_per_pages():
     
     df.set_index('app_name', inplace=True)
     ax = df.plot(kind='bar', rot=60, figsize= (3,2))
-    ax.legend(loc='center', ncol=2, bbox_to_anchor=(0.5, 1.2), prop={'size': 8})
 
     # Hide the right and top spines
     ax.tick_params(top=False)
     ax.yaxis.set_major_formatter(mtick.PercentFormatter(xmax=100, decimals=None, symbol='%', is_latex=False))
+    
+    bars = ax.patches
+    hatches = ''.join(h*len(df) for h in 'x.O')
+    for bar, hatch in zip(bars, hatches):
+      bar.set_hatch(hatch)
+   
+    ax.legend(loc='center', ncol=3, bbox_to_anchor=(0.5, 1.2), prop={'size': 8})
+    
     
     plt.ylabel("Percentage of Samples",fontsize=g_fontsize_value)
     plt.xlabel("Workloads",fontsize=g_fontsize_value)
