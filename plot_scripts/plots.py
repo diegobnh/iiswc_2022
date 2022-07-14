@@ -452,9 +452,12 @@ def plot_statistics_to_pages_with_two_touches(app_dataset):
         filename = "percentis_" + app_dataset + ".csv"
         df = pd.read_csv(filename)
         df = df[df["percentis"].str.contains("count")==False]
-        #df.plot.scatter(x='percentis', y='values', figsize=(2,2), rot=60)
+        df['percentis'] = df['percentis'].str.replace('%','%-ile')
+
         df.set_index('percentis', inplace=True)
-        df['values'].plot(kind='bar', rot=60, figsize=(2,2))
+        ax = df['values'].plot(kind='bar', rot=60, figsize=(2,2))
+        ax.set(xlabel=None)
+        
         output = "two_access_distance_" +  app_dataset  +".pdf"
         plt.ylabel("Distance (sec)")
         plt.xlabel("25%-ile")
