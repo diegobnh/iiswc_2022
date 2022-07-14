@@ -79,7 +79,7 @@ def plot_counters_and_cpu_and_memory_usage():
         df[["dram_app","pmem_app"]].plot(ax=axes[0], linewidth=0.5)
         df[["dram_page_cache"]].plot(style='--', linewidth=0.5, ax=axes[0], color = 'Red')#linewidth=1.5,
         df[["pmem_page_cache"]].plot(style=':', linewidth=0.5, ax=axes[0], color = 'Black')#linewidth=1.5,
-        axes[0].legend(['DRAM (App)','PMEM (App)','DRAM (OS page cache)','PMEM (OS page cache)'], prop={'size': 6}, fancybox=True, framealpha=0.5)
+        axes[0].legend(['DRAM (App)','NVM (App)','DRAM (OS page cache)','NVM (OS page cache)'], prop={'size': 6}, fancybox=True, framealpha=0.5)
 
         #axes[0].text(10, 10, 'Begin text')
         #axes[0].set_ylabel('Memory Usage (GB)')
@@ -354,55 +354,55 @@ def decide_static_mapping_between_DRAM_and_PMEM(app_dataset, df_DRAM, df_PMEM):
         print("Objects to PMEM:")
         print(pmem_list)
         sys.stdout = original_stdout ## Reset the standard output to its original value
+
+def _plot_objects(app_dataset):
+    memory_types = ["dram", "pmem"]
+    for mem in memory_types:
+        filename = mem + "_obj_index_to_freq_" + app_dataset + ".csv"
+        df = pd.read_csv(filename)
+        ax0 = df['perc_access'].plot(kind="bar",figsize=(4, 2))
+        ax1 = ax0.twinx()
+        df['num_access'].plot(kind= 'line', color= 'black', ax=ax1,style='.-',linestyle='dashed')
+
+        ax0.legend(['% of accesses'], prop={'size': 8})
+        ax1.legend(['# of accesses'], prop={'size': 8}, loc='upper left', bbox_to_anchor=(0.59, 0.8))
+        ax0.yaxis.set_major_formatter(mtick.PercentFormatter(xmax=100, decimals=0, symbol='%', is_latex=False))
+
+        ax0.tick_params(axis='x', rotation=45)
+        ax0.set_xlabel('Object ID')
+        filename = "access_frequency_per_obj_in_" + mem + "_"+ app_dataset + ".pdf"
+        plt.savefig(filename,dpi=300, bbox_inches='tight', format='pdf')
+        plt.clf()
+        
 def plot_number_of_access_per_object_outside_from_cache(app_dataset):
-    #DRAM plot
-    #-------------------------------------------------------------------------------------------------------
-    #filename = "perfmem_trace_mapped/access_frequency_per_obj_in_DRAM_"+ app_dataset + ".csv"
     filename = "access_frequency_per_obj_in_DRAM_"+ app_dataset + ".csv"
     df_dram = pd.read_csv(filename)
-    df_dram.drop('call_stack_hash', axis=1, inplace=True)
-    df_dram = df_dram.head(10)
-    
-    ax0 = df_dram['perc_access'].plot(kind="bar",figsize=(4, 2))
-    #ax.set_ylabel('Percentage of Access')
-    ax1 = ax0.twinx()
-    #ax0.set_ylabel('Number of Access', fontsize=12)
-    df_dram['num_access'].plot(kind= 'line', color= 'black', ax=ax1,style='.-',linestyle='dashed')
-    
-    ax0.yaxis.set_major_formatter(mtick.PercentFormatter(xmax=100, decimals=0, symbol='%', is_latex=False))
-    
-    ax0.legend(['Percentage of Access'], prop={'size': 8})
-    ax1.legend(['Number of Access'], prop={'size': 8}, loc='upper left')
-    
-    ax0.tick_params(axis='x', rotation=45)
-    plt.xlabel('Object ID')
-    ax0.set_xlabel('Object ID')
-    filename = "access_frequency_per_obj_in_DRAM_" + app_dataset + ".pdf"
-    plt.savefig(filename,dpi=300, bbox_inches='tight', format='pdf')
-    plt.clf()
-    
-    #PMEM plot
-    #-------------------------------------------------------------------------------------------------------
-    #filename = "perfmem_trace_mapped/access_frequency_per_obj_in_PMEM_"+ app_dataset + ".csv"
     filename = "access_frequency_per_obj_in_PMEM_"+ app_dataset + ".csv"
     df_pmem = pd.read_csv(filename)
+    df_dram['type'] = "dram"
+    df_pmem['type'] = "pmem"
+
+    df = df_dram.append(df_pmem,ignore_index = True)
+    df['ID']=pd.factorize(df.call_stack_hash)[0]
+    df_dram = df.loc[df.type == "dram"]
+    df_pmem = df.loc[df.type == "pmem"]
+
+    df_dram.set_index('ID', inplace=True)
+    df_dram.drop('call_stack_hash', axis=1, inplace=True)
+    df_dram.drop('type', axis=1, inplace=True)
+    df_dram = df_dram.head(10)
+    filename = "dram_obj_index_to_freq_" + app_dataset + ".csv"
+    df_dram.to_csv(filename, index=True)
+
     df_pmem.drop('call_stack_hash', axis=1, inplace=True)
+    df_pmem.drop('type', axis=1, inplace=True)
+    df_pmem.set_index('ID', inplace=True)
     df_pmem = df_pmem.head(10)
-    
-    ax0 = df_pmem['perc_access'].plot(kind="bar",figsize=(4, 2))
-    ax1 = ax0.twinx()
-    df_pmem['num_access'].plot(kind= 'line', color= 'black', ax=ax1,style='.-',linestyle='dashed')
-    
-    ax0.legend(['Percentage of Access'], prop={'size': 8})
-    ax1.legend(['Number of Access'], prop={'size': 8}, loc='upper left')
-    
-    ax0.yaxis.set_major_formatter(mtick.PercentFormatter(xmax=100, decimals=0, symbol='%', is_latex=False))
-    
-    ax0.tick_params(axis='x', rotation=45)
-    ax0.set_xlabel('Object ID')
-    filename = "access_frequency_per_obj_in_PMEM_" + app_dataset + ".pdf"
-    plt.savefig(filename,dpi=300, bbox_inches='tight', format='pdf')
-    plt.clf()
+    filename = "pmem_obj_index_to_freq_" + app_dataset + ".csv"
+    df_pmem.to_csv(filename, index=True)
+
+    _plot_objects(app_dataset)
+
 def analysis_only_two_touches_per_page(app_dataset, df_PMEM):
 
     filename = "access_frequency_per_obj_in_PMEM_" + app_dataset + ".csv"
