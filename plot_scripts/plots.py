@@ -849,7 +849,7 @@ def plot_percentage_access_on_PMEM_and_DRAM():
     ax.yaxis.set_major_formatter(mtick.PercentFormatter(xmax=100, decimals=0, symbol='%', is_latex=False))
     #this is responsible to put hatches for each bar plot    
     bars = ax.patches
-    hatches = ''.join(h*len(df) for h in 'x.O')
+    hatches = ''.join(h*len(df) for h in '/*o')
     for bar, hatch in zip(bars, hatches):
       bar.set_hatch(hatch)
    
