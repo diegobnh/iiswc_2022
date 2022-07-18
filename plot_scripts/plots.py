@@ -865,22 +865,23 @@ def plot_percentage_access_on_PMEM_and_DRAM():
     plt.clf()
 def plot_one_and_two_touches_per_pages():
     df = pd.read_csv("input_touches_per_pages.csv", names=["app_name","1 touch","2 touches"])
-    
+    df['3+ touches'] = 100 - (df['1 touch'] + df['2 touches'])
     df.set_index('app_name', inplace=True)
     ax = df.plot(kind='bar', rot=60, figsize= (3,2))
 
     # Hide the right and top spines
     ax.tick_params(top=False)
     ax.yaxis.set_major_formatter(mtick.PercentFormatter(xmax=100, decimals=None, symbol='%', is_latex=False))
-    
+
     bars = ax.patches
     hatches = ''.join(h*len(df) for h in 'x.O')
+    #hatches = ['**', 'OO', '...']
+    print(hatches)
     for bar, hatch in zip(bars, hatches):
       bar.set_hatch(hatch)
-   
+
     ax.legend(loc='center', ncol=3, bbox_to_anchor=(0.5, 1.2), prop={'size': 8})
-    
-    
+
     plt.ylabel("Percentage of Samples",fontsize=g_fontsize_value)
     plt.xlabel("Workloads",fontsize=g_fontsize_value)
     plt.grid()
