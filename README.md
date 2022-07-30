@@ -15,3 +15,7 @@ The execution of the experiments is divided into three major phases:
   * This step is accomplished by running a python program called ***mapping.py***.
  
 After that we used shell scripts and python script to generate graphs and extract the results.
+
+## Requirements
+
+* sudo sh -c 'echo 0 >/proc/sys/kernel/perf_event_paranoid'
