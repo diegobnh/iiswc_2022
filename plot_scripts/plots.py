@@ -73,7 +73,7 @@ def plot_counters_and_cpu_and_memory_usage():
         df[["pmem_app"]].plot(ax=axes[0], style="-.",linewidth=0.75)
         df[["dram_page_cache"]].plot(style='--', linewidth=0.75, ax=axes[0], color = 'Red')#linewidth=1.5,
         df[["pmem_page_cache"]].plot(style=':', linewidth=0.75, ax=axes[0], color = 'Black')#linewidth=1.5,
-        axes[0].legend(['DRAM (App)','NVM (App)','DRAM (OS page cache)','NVM (OS page cache)'], prop={'size': 8}, bbox_to_anchor(1, 1.5),fancybox=True, framealpha=0.5)
+        axes[0].legend(['DRAM (App)','NVM (App)','DRAM (OS page cache)','NVM (OS page cache)'], prop={'size': 8}, bbox_to_anchor=(1, 1.5),fancybox=True, framealpha=0.5)
 
         #axes[0].set_ylabel('Memory Usage (GB)')
 
@@ -333,7 +333,7 @@ def _plot_objects(app_dataset):
         ax0 = df['perc_access'].plot(kind="bar",figsize=(4, 2))
         ax1 = ax0.twinx()
         df['num_access'].plot(kind= 'line', color= 'black', ax=ax1,style='.-',linestyle='dashed')
-        ax1.set_xticks(range(df.ID.count())). #to force xticks keep unordered
+        ax1.set_xticks(range(df.ID.count())) #to force xticks keep unordered
         _ = ax1.set_xticklabels(df.ID)
 
         ax0.legend(['% of accesses'], prop={'size': 8})
