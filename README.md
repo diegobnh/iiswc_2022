@@ -60,14 +60,13 @@ The urand and kron datasets were generated using the following parameters, total
 
 ## Experiment Workflow
 
-It is necessary to inform where the gapbs applications were installed. You must change the path on your machine.
+Before starting it is necessary to inform where the gapbs applications were installed. For that, you must configure the environment variable GAPBS_PATH according to the command below, modifying only the path.
 
-$GAPBS_PATH
 ```console
 [dmoura@optane]$ export GAPBS_PATH="/scratch/gapbs"
 ```
 
-The first step is to collect memory samples and trace allocations from the application to be monitored. For this we will enter the collect_scripts folder and run the following command:
+Then the first script to runThe first step is to collect memory samples and trace allocations from the application to be monitored. For this we will enter the collect_scripts folder and run the following command:
 
 ```console
 [dmoura@optane collect_scripts]$ sudo ./start_run.sh
