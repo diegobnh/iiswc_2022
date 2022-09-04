@@ -28,7 +28,6 @@ After that we used shell scripts and python script to generate graphs and extrac
 
 ## Installation
 
-
 We ran our experiments on a single socket of a dual socket Intel Cascade Lake. We are configuring the Intel Optane as App Direct Mode on a single socket and then we are instantiating as numa node.
 ```console
 [root@optane]# ndctl destroy-namespace -f all
@@ -58,3 +57,12 @@ The urand and kron datasets were generated using the following parameters, total
 [dmoura@optane gapbs]$ ./converter -g30 -k16 -b kron.sg
 [dmoura@optane gapbs]$ ./converter -u31 -k16 -b urand.sg
 ```
+
+## Experiment Workflow
+
+The first step is to collect memory samples and trace allocations from the application to be monitored. For this we will enter the collect_trace folder and run the start_run.sh script.
+
+```console
+[dmoura@optane gapbs]$ sudo ./start_run.sh
+```
+
