@@ -28,7 +28,7 @@ After that we used shell scripts and python script to generate graphs and extrac
 
 ## Installation
 
-We ran our experiments on a single socket of a dual socket Intel Cascade Lake. We are configuring the Intel Optane as App Direct Mode on a single socket and then we are instantiating as numa node.
+We ran our experiments on a single socket of a dual socket Intel Cascade Lake. The commands below configure the Intel Optane as App Direct Mode on a single socket and then instantiate as on a node.
 ```console
 [root@optane]# ndctl destroy-namespace -f all
 [root@optane]# ipmctl create -f -goal -socket 0 PersistentMemoryType=AppDirect
