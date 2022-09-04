@@ -20,7 +20,7 @@ After that we used shell scripts and python script to generate graphs and extrac
 
 * ***CPU support*** We use Intel(R) Xeon(R) Gold 6240 CPU. But any other CPU supporting Intel Optane is suitable to perform the experiment. Also, intel optane memory is required.
 * ***Linux support*** We use Linux Kernel 5.15. The kernel must be greater than or equal to kernel 5.1 as it is from this version that the kernel brings support for the volatile-use of persistent memory as a hotplugged memory region (KMEM DAX). When this feature is enabled, persistent memory is seen as a separate memory-only NUMA node(s).
-* ***Utilities*** It is also necessary to install the [syscall-intercept]([https://www.somewebsite.com](https://github.com/pmem/syscall_intercept)) library responsible for intercepting memory allocations in user space.
+* ***Utilities*** It is also necessary to install the [syscall-intercept](https://github.com/pmem/syscall_intercept) library responsible for intercepting memory allocations in user space.
 
 ## Installation
 * sudo sh -c 'echo 0 >/proc/sys/kernel/perf_event_paranoid'
