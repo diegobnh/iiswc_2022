@@ -29,3 +29,12 @@ We changed the permission of perf to collect the samples:
 ```console
 [dmoura@optane]$ sudo sh -c 'echo 0 >/proc/sys/kernel/perf_event_paranoid'
 ```
+
+
+We ran our experiments on a single socket of a dual socket Intel Cascade Lake. We are configuring the Intel Optane as App Direct Mode on a single socket and then we are instantiating as numa node.
+```console
+[root@optane]# ndctl destroy-namespace -f all
+[root@optane]# ipmctl create -f -goal -socket 0 PersistentMemoryType=AppDirect
+[root@optane]# ndctl create-namespace --region=region0 -m devdax --map=mem
+[root@optane]# daxctl reconfigure-device dax0.0 --mode=system-ram
+```
