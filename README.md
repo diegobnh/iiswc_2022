@@ -23,4 +23,7 @@ After that we used shell scripts and python script to generate graphs and extrac
 * ***Utilities*** It is also necessary to install the [syscall-intercept](https://github.com/pmem/syscall_intercept) library responsible for intercepting memory allocations in user space. We also use [ipmctl](https://github.com/intel/ipmctl/releases) and [ndctl](https://github.com/pmem/ndctl) to configure intel optane and instantiate as numa node.
 
 ## Installation
-* sudo sh -c 'echo 0 >/proc/sys/kernel/perf_event_paranoid'
+
+```console
+[dmoura@optane]$ sudo sh -c 'echo 0 >/proc/sys/kernel/perf_event_paranoid'
+```
