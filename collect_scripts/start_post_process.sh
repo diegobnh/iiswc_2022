@@ -22,6 +22,6 @@ for ((j = 0; j < ${#APP_DATASET[@]}; j++)); do
 
     sudo ./post_process.sh ${APP[$j]} ${APP_DATASET[$j]}
 
-    rm post_process.sh run.sh
+    rm post_process.sh
     cd ../..
 done
