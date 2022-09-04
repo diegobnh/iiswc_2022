@@ -1,6 +1,6 @@
 #!/bin/bash
 
-APP_DATASET=("bc_kron" "bfs_kron" "bfs_urand" "cc_kron" "cc_urand")
+source app_dataset.sh
 
 for ((j = 0; j < ${#APP_DATASET[@]}; j++)); do
     echo "Running:"${APP_DATASET[$j]}
