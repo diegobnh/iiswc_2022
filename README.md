@@ -74,7 +74,7 @@ Before starting it is necessary to inform where the gapbs applications were inst
 [dmoura@optane]$ export GAPBS_PATH="/scratch/gapbs"
 ```
 
-Then the first script to runThe first step is to collect memory samples and trace allocations from the application to be monitored. For this we will enter the collect_scripts folder and run the following command:
+Then the first script to run will collect memory samples and trace allocations from the application to be monitored. For this we will enter the collect_scripts folder and run the following command:
 
 ```console
 [dmoura@optane collect_scripts]$ sudo ./start_run.sh
