@@ -60,13 +60,13 @@ The urand and kron datasets were generated using the following parameters, total
 
 ## Experiment Workflow
 
-The first step is to collect memory samples and trace allocations from the application to be monitored. For this we will enter the collect_trace folder and run the following command:
+The first step is to collect memory samples and trace allocations from the application to be monitored. For this we will enter the collect_scripts folder and run the following command:
 
 ```console
-[dmoura@optane collect]$ sudo ./start_run.sh
+[dmoura@optane collect_scripts]$ sudo ./start_run.sh
 ```
 
 After completing the previous step, we will post process the generated results using the following command:
 ```console
-[dmoura@optane collect]$ sudo ./start_postprocess.sh
+[dmoura@optane collect_scripts]$ sudo ./start_postprocess.sh
 ```
