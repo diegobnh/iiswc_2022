@@ -48,7 +48,7 @@ We must clone the library to intercept the allocations and follow the steps cont
 [dmoura@optane]$ git clone https://github.com/pmem/syscall_intercept.git
 ```
 
-We should also clone the repository for the workloads (applications + datasets):
+We should also clone the repository for the workloads (applications + datasets) and follow the steps for compiling and generating the datasets:
 ```console
 [dmoura@optane]$ git clone https://github.com/sbeamer/gapbs.git
 ```
