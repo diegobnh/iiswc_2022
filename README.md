@@ -36,6 +36,14 @@ We ran our experiments on a single socket of a dual socket Intel Cascade Lake. T
 [root@optane]# daxctl reconfigure-device dax0.0 --mode=system-ram
 ```
 
+
+Then you must clone and build your own kernel from the following repository:
+```console
+[dmoura@optane]$ git clone git://git.kernel.org/pub/scm/linux/kernel/git/vishal/tiering.git
+[dmoura@optane]$ git checkout origin/tiering-0.8
+```
+We compiled the latest version (tiering-0.8) at the time.
+
 We changed the permission of perf to collect the samples:
 
 ```console
