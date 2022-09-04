@@ -24,6 +24,8 @@ After that we used shell scripts and python script to generate graphs and extrac
 
 ## Installation
 
+We changed the permission of perf to collect the samples:
+
 ```console
 [dmoura@optane]$ sudo sh -c 'echo 0 >/proc/sys/kernel/perf_event_paranoid'
 ```
