@@ -60,11 +60,16 @@ The urand and kron datasets were generated using the following parameters, total
 
 ## Experiment Workflow
 
+It is necessary to inform within the run.sh script the path from where the gapbs applications were installed.
+
+
 The first step is to collect memory samples and trace allocations from the application to be monitored. For this we will enter the collect_scripts folder and run the following command:
 
 ```console
 [dmoura@optane collect_scripts]$ sudo ./start_run.sh
 ```
+
+The start_run.sh script will generate three files for each workload: allocations.csv, track_info.csv and perf.data.
 
 After completing the previous step, we will post process the generated results using the following command:
 ```console
