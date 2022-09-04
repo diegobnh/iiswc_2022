@@ -37,7 +37,7 @@ We ran our experiments on a single socket of a dual socket Intel Cascade Lake. T
 ```
 
 
-Then you must clone and build your own kernel from the following repository:
+Then you must clone and build the kernel with autonuma support from the following repository:
 ```console
 [dmoura@optane]$ git clone git://git.kernel.org/pub/scm/linux/kernel/git/vishal/tiering.git
 [dmoura@optane]$ git checkout origin/tiering-0.8
