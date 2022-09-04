@@ -103,14 +103,8 @@ void get_call_stack (int size_allocation, char *call_stack_concat) {
 }
 
 
-static int
-hook(long syscall_number,
-			long arg0, long arg1,
-			long arg2, long arg3,
-			long arg4, long arg5,
-			long *result)
+static int hook (long syscall_number, long arg0, long arg1, long arg2, long arg3, long arg4, long arg5,	long *result)
 {
-
     int static mmap_id=0;
     struct timespec ts;
     char call_stack_concat[SIZE]="";
@@ -155,13 +149,10 @@ hook(long syscall_number,
     }
 }
 
-static __attribute__((constructor)) void
-init(int argc, char * argv[])
+static __attribute__((constructor)) void init(int argc, char * argv[])
 {
     setvbuf(stdout, NULL, _IONBF, 0);  //avoid buffer from printf
     redirect_stdout("call_stack.txt");
 
     intercept_hook_point = hook;
 }
-
-
