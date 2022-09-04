@@ -1,5 +1,7 @@
 # Performance Characterization of AutoNUMA Memory Tiering on Graph Analytics #
 
+<a href="design.pdf" class="image fit"><img src="design.png" alt=""></a>
+
 This directory contains instructions and codes for reproducing experimental results presented in "Performance Characterization of AutoNUMA Memory Tiering on Graph Analytics". This paper is accepted for publication at 2022 IEEE International Symposium on Workload Characterization (IISWC 2022). To run these artifacts, a machine with Intel Optane is required.
 
 The execution of the experiments is divided into three major phases:
