@@ -60,8 +60,11 @@ The urand and kron datasets were generated using the following parameters, total
 
 ## Experiment Workflow
 
-It is necessary to inform within the run.sh script the path from where the gapbs applications were installed.
+It is necessary to inform where the gapbs applications were installed. You must change the path on your machine.
 
+$GAPBS_PATH
+```console
+[dmoura@optane]$ export GAPBS_PATH="/scratch/gapbs"
 
 The first step is to collect memory samples and trace allocations from the application to be monitored. For this we will enter the collect_scripts folder and run the following command:
 
