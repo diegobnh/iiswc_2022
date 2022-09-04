@@ -28,12 +28,6 @@ After that we used shell scripts and python script to generate graphs and extrac
 
 ## Installation
 
-We changed the permission of perf to collect the samples:
-
-```console
-[dmoura@optane]$ sudo sh -c 'echo 0 >/proc/sys/kernel/perf_event_paranoid'
-```
-
 
 We ran our experiments on a single socket of a dual socket Intel Cascade Lake. We are configuring the Intel Optane as App Direct Mode on a single socket and then we are instantiating as numa node.
 ```console
@@ -43,6 +37,21 @@ We ran our experiments on a single socket of a dual socket Intel Cascade Lake. W
 [root@optane]# daxctl reconfigure-device dax0.0 --mode=system-ram
 ```
 
+We changed the permission of perf to collect the samples:
+
+```console
+[dmoura@optane]$ sudo sh -c 'echo 0 >/proc/sys/kernel/perf_event_paranoid'
+```
+
+We must clone the library to intercept the allocations and follow the steps contained in the repository for the installation.
+```console
+[dmoura@optane]$ git clone https://github.com/pmem/syscall_intercept.git
+```
+
+We should also clone the repository for the workloads (applications + datasets):
+```console
+[dmoura@optane]$ git clone https://github.com/sbeamer/gapbs.git
+```
 
 The urand and kron datasets were generated using the following parameters, totaling approximately 208GB and 259GB respectively.
 ```console
