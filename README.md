@@ -76,5 +76,5 @@ The start_run.sh script will generate three files for each workload: allocations
 
 After completing the previous step, we will post process the generated results using the following command:
 ```console
-[dmoura@optane collect_scripts]$ sudo ./start_post_process.sh.sh
+[dmoura@optane collect_scripts]$ sudo ./start_post_process.sh
 ```
