@@ -68,5 +68,5 @@ The first step is to collect memory samples and trace allocations from the appli
 
 After completing the previous step, we will post process the generated results using the following command:
 ```console
-[dmoura@optane collect_scripts]$ sudo ./start_postprocess.sh
+[dmoura@optane collect_scripts]$ sudo ./start_post_process.sh.sh
 ```
