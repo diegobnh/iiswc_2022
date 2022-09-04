@@ -65,6 +65,7 @@ It is necessary to inform where the gapbs applications were installed. You must 
 $GAPBS_PATH
 ```console
 [dmoura@optane]$ export GAPBS_PATH="/scratch/gapbs"
+```
 
 The first step is to collect memory samples and trace allocations from the application to be monitored. For this we will enter the collect_scripts folder and run the following command:
 
