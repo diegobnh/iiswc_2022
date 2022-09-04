@@ -47,5 +47,5 @@ We ran our experiments on a single socket of a dual socket Intel Cascade Lake. W
 The urand and kron datasets were generated using the following parameters, totaling approximately 208GB and 259GB respectively.
 ```console
 [dmoura@optane gapbs]$ ./converter -g30 -k16 -b kron.sg
-[dmoura@optane gapbs]$ ./converter -u31 -k16 -b kron.sg
+[dmoura@optane gapbs]$ ./converter -u31 -k16 -b urand.sg
 ```
