@@ -33,28 +33,27 @@ long int hash (char* word)
     return abs(hash) ;
 }
 
-void
-redirect_stdout(char *filename)
+void redirect_stdout (char *filename)
 {
-	int fd;
-	if ((fd = open(filename,O_CREAT|O_WRONLY,0666)) < 0){
-	   perror(filename);
-	   exit(1);
-	}
-	close(1);
-	if (dup(fd) !=1){
-	   fprintf(stderr,"Unexpected dup failure\n");
-	   exit(1);
-	}
-	close(fd);
+    int fd;
+    if ((fd = open(filename,O_CREAT|O_WRONLY,0666)) < 0){
+        perror(filename);
+        exit(1);
+    }
+    close(1);
+    if (dup(fd) !=1){
+        fprintf(stderr,"Unexpected dup failure\n");
+	exit(1);
+    }
+    close(fd);
 
-	g_fp = fopen("call_stack.txt", "w+");
-	if(g_fp==NULL){
-	   printf("Error when try to use fopen!!\n");
-	}
+    g_fp = fopen("call_stack.txt", "w+");
+    if(g_fp == NULL){
+        printf("Error when try to use fopen!!\n");
+    }
 }
 
-void get_call_stack(int size_allocation, char *call_stack_concat) {
+void get_call_stack (int size_allocation, char *call_stack_concat) {
     int static mmap_id=0;
     int nptrs;
     void *buffer[SIZE];
@@ -109,47 +108,45 @@ hook(long syscall_number,
 			long *result)
 {
 
-        int static mmap_id=0;
-        struct timespec ts;
-        //long int hash;
-        char call_stack_concat[SIZE]="";
-        //long result;
+    int static mmap_id=0;
+    struct timespec ts;
+    char call_stack_concat[SIZE]="";
+    
+    if (syscall_number == SYS_mmap) {
 
-	if (syscall_number == SYS_mmap) {
+	/* pass it on to the kernel */
+	*result = syscall_no_intercept(syscall_number, arg0, arg1, arg2, arg3, arg4, arg5);
 
-		/* pass it on to the kernel */
-		*result = syscall_no_intercept(syscall_number, arg0, arg1, arg2, arg3, arg4, arg5);
+	pthread_mutex_lock(&count_mutex);
+	clock_gettime(CLOCK_MONOTONIC, &ts);
+	get_call_stack(arg1,call_stack_concat);
+	fprintf(stderr, "%ld.%ld,mmap, %ld, %p,%ld,%s\n",ts.tv_sec,ts.tv_nsec,arg1,(void *)*result,hash(call_stack_concat),call_stack_concat);
+	pthread_mutex_unlock(&count_mutex);
 
-		pthread_mutex_lock(&count_mutex);
-		clock_gettime(CLOCK_MONOTONIC, &ts);
-		get_call_stack(arg1,call_stack_concat);
-		fprintf(stderr, "%ld.%ld,mmap, %ld, %p,%ld,%s\n",ts.tv_sec,ts.tv_nsec,arg1,(void *)*result,hash(call_stack_concat),call_stack_concat);
-		pthread_mutex_unlock(&count_mutex);
-
-		return 0;
-	}else if(syscall_number == SYS_munmap){
-		/* pass it on to the kernel */
-		*result = syscall_no_intercept(syscall_number, arg0, arg1, arg2, arg3, arg4, arg5);
-		clock_gettime(CLOCK_MONOTONIC, &ts);
-		fprintf(stderr, "%ld.%ld,munmap,%p,%ld\n", ts.tv_sec,ts.tv_nsec, (void *)arg0, arg1);
-		return 0;
-	}else {
-		/*
-		 * Ignore any other syscalls
-		 * i.e.: pass them on to the kernel
-		 * as would normally happen.
-		 */
-		return 1;
-	}
+	return 0;
+    }else if (syscall_number == SYS_munmap){
+	/* pass it on to the kernel */
+	*result = syscall_no_intercept(syscall_number, arg0, arg1, arg2, arg3, arg4, arg5);
+	clock_gettime(CLOCK_MONOTONIC, &ts);
+	fprintf(stderr, "%ld.%ld,munmap,%p,%ld\n", ts.tv_sec,ts.tv_nsec, (void *)arg0, arg1);
+	return 0;
+    }else {
+	/*
+	 * Ignore any other syscalls
+	 * i.e.: pass them on to the kernel
+	 * as would normally happen.
+	 */
+	return 1;
+    }
 }
 
 static __attribute__((constructor)) void
 init(int argc, char * argv[])
 {
-	setvbuf(stdout, NULL, _IONBF, 0);  //avoid buffer from printf
-	redirect_stdout("call_stack.txt");
+    setvbuf(stdout, NULL, _IONBF, 0);  //avoid buffer from printf
+    redirect_stdout("call_stack.txt");
 
-	intercept_hook_point = hook;
+    intercept_hook_point = hook;
 }
 
 
