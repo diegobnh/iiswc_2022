@@ -42,3 +42,10 @@ We ran our experiments on a single socket of a dual socket Intel Cascade Lake. W
 [root@optane]# ndctl create-namespace --region=region0 -m devdax --map=mem
 [root@optane]# daxctl reconfigure-device dax0.0 --mode=system-ram
 ```
+
+
+The urand and kron datasets were generated using the following parameters, totaling approximately 208GB and 259GB respectively.
+```console
+[dmoura@optane gapbs]$ ./converter -g30 -k16 -b kron.sg
+[dmoura@optane gapbs]$ ./converter -u31 -k16 -b kron.sg
+```
