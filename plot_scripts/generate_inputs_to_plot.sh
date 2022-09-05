@@ -32,10 +32,10 @@ for ((j = 0; j < ${#APP_DATASET[@]}; j++)); do
     echo $exec_time_static_mapping $exec_time_autonuma | awk '{print (1-($1/$2))*100}' >> input_exec_time.csv
   
     #-------------------------------------------------------------------------------------------------------------------
-    one_touch=$(grep "1 touch" ${APP_DATASET[$j]}/autonuma/df_touch_per_page_${APP_DATASET[$j]}.csv | awk -F, '{print $2}')
-    two_touches=$(grep "2 touches" ${APP_DATASET[$j]}/autonuma/df_touch_per_page_${APP_DATASET[$j]}.csv | awk -F, '{print $2}')
+    #one_touch=$(grep "1 touch" ${APP_DATASET[$j]}/autonuma/df_touch_per_page_${APP_DATASET[$j]}.csv | awk -F, '{print $2}')
+    #two_touches=$(grep "2 touches" ${APP_DATASET[$j]}/autonuma/df_touch_per_page_${APP_DATASET[$j]}.csv | awk -F, '{print $2}')
 
-    echo ${APP_DATASET[$j]},$one_touch,$two_touches >> input_touches_per_pages.csv
+    #echo ${APP_DATASET[$j]},$one_touch,$two_touches >> input_touches_per_pages.csv
   
     #-------------------------------------------------------------------------------------------------------------------
 done
