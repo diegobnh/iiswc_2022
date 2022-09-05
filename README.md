@@ -89,3 +89,8 @@ After completing the previous step, we will post process the generated results u
 ```console
 [dmoura@optane collect_scripts]$ sudo ./start_post_process.sh
 ```
+
+Then we run the script to perform the mapping using the following command:
+```console
+[dmoura@optane collect_scripts]$ ./start_mapping.sh
+```
