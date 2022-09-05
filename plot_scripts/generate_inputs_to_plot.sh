@@ -6,7 +6,8 @@ rm -f input_perc_access_DRAM_and_PMEM.csv
 rm -f input_exec_time.csv 
 rm -f input_touches_per_pages.csv
 
-source ../collect_scripts/app_dataset.sh
+cd ../collect_scripts/
+source app_dataset.sh
 
 for ((j = 0; j < ${#APP_DATASET[@]}; j++)); do
     #-------------------------------------------------------------------------------------------------------------------
