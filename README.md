@@ -94,3 +94,10 @@ Then we run the script to perform the mapping using the following command:
 ```console
 [dmoura@optane collect_scripts]$ ./start_mapping.sh
 ```
+
+Finally we generate some input data and then create the graphs.
+```console
+[dmoura@optane plot_scripts]$ ./generate_inputs.ss
+[dmoura@optane plot_scripts]$ ./start_plots.sh
+```
+
