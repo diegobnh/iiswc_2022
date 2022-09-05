@@ -11,9 +11,13 @@ source app_dataset.sh
 
 for ((j = 0; j < ${#APP_DATASET[@]}; j++)); do
     #-------------------------------------------------------------------------------------------------------------------
-    dram=$(grep RAM ${APP_DATASET[$j]}/autonuma/perc_access_pmem_dram_${APP_DATASET[$j]}.csv | awk -F, '{print $2}')
-    pmem=$(grep PMEM ${APP_DATASET[$j]}/autonuma/perc_access_pmem_dram_${APP_DATASET[$j]}.csv | awk -F, '{print $2}')
+    total=$(wc -l ${APP_DATASET[$j]}/autonuma/memory_trace_${APP_DATASET[$j]}.csv | awk '{print $1}')
+    dram=$(wc -l ${APP_DATASET[$j]}/autonuma/perfmem_trace_mapped_DRAM_${APP_DATASET[$j]}.csv | awk '{print $1}')
+    pmem=$(wc -l ${APP_DATASET[$j]}/autonuma/perfmem_trace_mapped_PMEM_${APP_DATASET[$j]}.csv | awk '{print $1}')
     
+    dram=$(echo "scale=2;100*($dram/$total)" | bc)
+    pmem=$(echo "scale=2;100*($pmem/$total)" | bc)
+        
     echo ${APP_DATASET[$j]},$dram,$pmem >> input_perc_access_DRAM_and_PMEM.csv
     #-------------------------------------------------------------------------------------------------------------------
     start=$(sed -n 2p ${APP_DATASET[$j]}/autonuma/track_info_${APP_DATASET[$j]}.csv | awk -F, '{print $1}')
