@@ -30,7 +30,7 @@ After that we used shell scripts and python script to generate graphs and extrac
 * **Linux support**
   * The kernel must be greater than or equal to kernel 5.1. From that version the kernel brings support for the volatile-use of persistent memory as a hotplugged memory region (KMEM DAX). When this feature is enabled, persistent memory is seen as a separate memory-only NUMA node(s). The kernel must also support autonuma memory tiering.
 * **Utilities**
-  * We use the [syscall-intercept](https://github.com/pmem/syscall_intercept) library responsible for intercepting memory allocations in user space. We also use [ipmctl](https://github.com/intel/ipmctl/releases) and [ndctl](https://github.com/pmem/ndctl) to configure intel optane and instantiate as numa node.
+  * We use the [syscall-intercept](https://github.com/pmem/syscall_intercept) library responsible for intercepting memory allocations in user space. We also use [ipmctl](https://github.com/intel/ipmctl/releases), [ndctl](https://github.com/pmem/ndctl) and [daxctl](https://github.com/pmem/ndctl) to configure intel optane and instantiate as numa node.
 
 ## Installation
 
