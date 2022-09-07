@@ -17,7 +17,7 @@ for ((j = 0; j < ${#APP_DATASET[@]}; j++)); do
 
     sudo ./run.sh ${APP[$j]} ${DATASET[$j]} autonuma
 
-    rm run.sh *.so call_stack.txt
+    rm -f run.sh *.so call_stack.txt
     cd ../..
 done
 
@@ -36,6 +36,6 @@ for ((j = 0; j < ${#APP_DATASET[@]}; j++)); do
 
     sudo ./run.sh ${APP[$j]} ${DATASET[$j]} static_mapping
 
-    rm run.sh *.so call_stack.txt
+    rm -f run.sh *.so call_stack.txt
     cd ../..
 done
