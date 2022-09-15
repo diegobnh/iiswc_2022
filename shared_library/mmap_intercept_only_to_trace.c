@@ -70,6 +70,8 @@ void get_call_stack (int size_allocation, char *call_stack_concat) {
     int i; // callstack_line_index;
     int k=0;
     const char* substring = getenv("APP");
+	
+    sprintf(size, ":%d", size_allocation);
 
     char *p;
     //while ((read = getline(&g_line, &len, g_fp)) != -1) {
