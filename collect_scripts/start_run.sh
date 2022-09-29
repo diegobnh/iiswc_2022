@@ -5,9 +5,9 @@ source app_dataset.sh
 for ((j = 0; j < ${#APP_DATASET[@]}; j++)); do
     echo "Running:"${APP_DATASET[$j]}
 
-    sudo -u dmoura mkdir -p ${APP_DATASET[$j]}
-    sudo -u dmoura mkdir -p ${APP_DATASET[$j]}/autonuma
-    sudo -u dmoura chmod +777 ${APP_DATASET[$j]}/autonuma
+    mkdir -p ${APP_DATASET[$j]}
+    mkdir -p ${APP_DATASET[$j]}/autonuma
+    chmod +777 ${APP_DATASET[$j]}/autonuma
 
     cd ${APP_DATASET[$j]}/autonuma
     rm -f *
@@ -25,8 +25,8 @@ done
 for ((j = 0; j < ${#APP_DATASET[@]}; j++)); do
     echo "Running:"${APP_DATASET[$j]}
 
-    sudo -u dmoura mkdir -p ${APP_DATASET[$j]}/static_mapping
-    sudo -u dmoura chmod +777 ${APP_DATASET[$j]}/static_mapping
+    mkdir -p ${APP_DATASET[$j]}/static_mapping
+    chmod +777 ${APP_DATASET[$j]}/static_mapping
 
     cd ${APP_DATASET[$j]}/static_mapping
     rm -f *
