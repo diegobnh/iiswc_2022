@@ -1,6 +1,6 @@
 
-//#include <libsyscall_intercept_hook_point.h>
-#include "/ihome/dmosse/dmoura/0_tools/syscall/syscall_intercept/include/libsyscall_intercept_hook_point.h"
+#include <libsyscall_intercept_hook_point.h>
+//#include "/ihome/dmosse/dmoura/0_tools/syscall/syscall_intercept/include/libsyscall_intercept_hook_point.h"
 #include <syscall.h>
 #include <errno.h>
 #include <stdio.h>
